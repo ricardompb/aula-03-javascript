@@ -1,0 +1,14 @@
+.botao-player {
+  background-color: green;
+  color: white;
+  border-radius: 10px;
+  min-height: 35px;
+  min-width: 117px;  
+}
+.botao-stop {
+  background-color: red;
+  color: white;
+  border-radius: 10px;
+  min-height: 35px;
+  min-width: 117px;
+}

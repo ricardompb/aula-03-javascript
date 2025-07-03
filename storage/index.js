@@ -78,6 +78,5 @@ function limparCarrinho () {
 }
 
 function addProdutoSessao() {
-  debugger
   sessionStorage.setItem(1, JSON.stringify({ nome: 'XPTO' }))
 }

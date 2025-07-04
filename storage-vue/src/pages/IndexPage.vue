@@ -1,100 +1,67 @@
 <template>
-  <div class="q-pa-md">
-    <q-avatar color="primary" text-color="white">{{ contador }}</q-avatar>
-    <q-table
-      title="Produtos"
-      flat
-      :rows="rows"
-      :columns="columns"
-      row-key="name">
-      <template #body-cell-acao="props">
-        <div class="row q-gutter-sm q-pa-sm">
-          <q-btn color="primary" @click="adicionarProdutoCarrinho(props.row)">Adicionar</q-btn>
-          <q-btn color="primary" @click="removeProdutoCarrinho(props.row.id)">Remover</q-btn>
+  <div class="q-pa-md row items-start q-gutter-md">
+    <div class="row col-12">
+      <q-avatar color="primary" text-color="white">{{ contador }}</q-avatar>
+    </div>
+
+    <template v-for="produto in produtos" :key="produto.id">
+      <q-card class="my-card q-pa-sm">
+        <div style="cursor: pointer;" @click="$router.push(`/produto/${produto.id}`)">
+          <img :src="produto.foto">
+
+          <q-card-section>
+            <div class="text-h6">{{ produto.nome }}</div>
+            <div v-if="false" class="text-subtitle2">by John Doe</div>
+          </q-card-section>
         </div>
-      </template>
-  </q-table>
+
+        <q-card-actions>
+          <q-btn
+            class="col-12" 
+            color="primary" 
+            label="Adicionar ao carrinho" 
+            @click="adicionarProdutoCarrinho(produto)"
+          />
+        </q-card-actions>
+      </q-card>
+    </template>
   </div>
 </template>
 
 <script>
 import { defineComponent } from 'vue';
+import produtos from './produto.model';
+import { useCarrinhoStore } from '../stores/carrinho';
 
 export default defineComponent({
   name: 'IndexPage',
+  setup () {
+    const carrinhoStore = useCarrinhoStore();
+    return { carrinhoStore };
+  },
   data () {
     return {
-      contador: 0,
-      rows: [
-        {
-          id: 1,
-          nome: 'Furadeira',
-          foto: '',
-        },
-        {
-          id: 2,
-          nome: 'Celular',
-          foto: '',
-        },
-        {
-          id: 3,
-          nome: 'Notebook',
-          foto: '',
-        },
-      ],
-      columns: [
-        {
-          name: 'id',
-          required: true,
-          label: 'Identificador',
-          align: 'left',
-          field: row => row.id,
-          format: val => `${val}`,
-          sortable: true
-        }, 
-        {
-          name: 'nome',
-          required: true,
-          label: 'Nome do produto',
-          align: 'left',
-          field: row => row.nome,
-          format: val => `${val}`,
-          sortable: true
-        }, 
-        {
-          name: 'foto',
-          required: true,
-          label: 'Foto do produto',
-          align: 'left',
-          field: row => row.foto,
-          format: val => `${val}`,
-          sortable: true
-        },
-        {
-          name: 'acao',
-          label: 'Ações',
-          align: 'left',
-          field: row => row.foto,
-          format: val => `${val}`,
-          sortable: true
-        }
-      ]
+      produtos,
+    }
+  },
+  computed: {
+    contador () {
+      return this.carrinhoStore.produtos.length
     }
   },
   methods: {
     adicionarProdutoCarrinho (produto) {
-      const temProdutoNoCarrinho = localStorage.getItem(produto.id);
-      if (temProdutoNoCarrinho) return
-      this.contador++
-      const carrinho = { ...produto, quantidade: 1 };
-      localStorage.setItem(produto.id, JSON.stringify(carrinho));
+      this.carrinhoStore.adicionarProduto(produto);
     },
     removeProdutoCarrinho (id) {
-      if (localStorage.getItem(id)) {
-        localStorage.removeItem(id)
-        this.contador--
-      }
+      this.carrinhoStore.removerProduto(id);
     }
   }
 });
 </script>
+
+<style lang="sass" scoped>
+.my-card
+  width: 100%
+  max-width: 250px
+</style>

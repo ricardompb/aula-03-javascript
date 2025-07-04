@@ -29,7 +29,7 @@ export const useCarrinhoStore = defineStore('carrinho', {
     },
     decrementarQuantidade (id) {
       const produto = this.produtos.find(p => p.id === id);
-      if (produto?.quantidade > 0) {
+      if (produto?.quantidade > 1) {
         produto.quantidade--;
       }
     },

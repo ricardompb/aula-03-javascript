@@ -18,10 +18,24 @@
         <div class="row justify-center">
           <img :src="produto.foto" style="width: 350px; height: 350px;"/>
         </div>        
-        <div class="row justify-center items-center">
+        <div class="row justify-center items-center" v-if="quantidadeNoCarrinho > 0">
           <q-btn flat dense icon="add" color="primary" @click="incrementarQuantidade"/>
           <span class="q-pl-sm q-pr-sm">{{ quantidadeNoCarrinho }}</span>          
-          <q-btn flat dense icon="remove" color="primary" @click="decrementarQuantidade"/>
+          <q-btn 
+            flat 
+            dense 
+            icon="remove" 
+            color="primary" 
+            :disable="quantidadeNoCarrinho === 1"
+            @click="decrementarQuantidade"/>
+        </div>
+        <div v-else class="row justify-center items-center">
+          <q-btn
+            class="col-12" 
+            color="primary" 
+            label="Adicionar ao carrinho" 
+            @click="adicionarProdutoCarrinho"
+          />          
         </div>
       </div>
       <div class="col-md-9 col-xs-12">        
@@ -52,6 +66,9 @@ export default {
     }
   },  
   methods: {
+    adicionarProdutoCarrinho () {
+      this.carrinhoStore.adicionarProduto(this.produto);
+    },
     incrementarQuantidade() {
       this.carrinhoStore.incrementarQuantidade(this.produto.id);
     },

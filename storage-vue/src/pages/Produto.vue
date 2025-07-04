@@ -1,6 +1,13 @@
 <template>
   <div class="q-pa-md" v-if="produto">
     <q-toolbar>
+      <q-btn 
+        flat 
+        dense 
+        icon="arrow_back" 
+        @click="$router.push('/')"
+      />
+      
       <q-toolbar-title>
         <div class="text-h6">{{ produto.nome }}</div>
       </q-toolbar-title>
@@ -18,7 +25,7 @@
         <div class="row justify-center">
           <img :src="produto.foto" style="width: 350px; height: 350px;"/>
         </div>        
-        <div class="row justify-center items-center" v-if="quantidadeNoCarrinho > 0">
+        <div class="row justify-center items-center" style="border: 1px solid #eee; border-radius: 4px; padding: 8px;" v-if="quantidadeNoCarrinho > 0">
           <q-btn flat dense icon="add" color="primary" @click="incrementarQuantidade"/>
           <span class="q-pl-sm q-pr-sm">{{ quantidadeNoCarrinho }}</span>          
           <q-btn 

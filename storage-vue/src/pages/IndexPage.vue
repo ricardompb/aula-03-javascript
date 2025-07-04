@@ -1,6 +1,6 @@
 <template>
-  <div class="q-pa-md row items-start q-gutter-md">
-    <div class="row col-12">
+  <div class="row justify-center q-pa-md row items-start q-gutter-md">
+    <div class="row col-12 justify-end">
       <q-avatar color="primary" text-color="white">{{ contador }}</q-avatar>
     </div>
 

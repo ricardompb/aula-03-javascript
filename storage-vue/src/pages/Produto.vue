@@ -53,8 +53,8 @@
 </template>
 
 <script>
-import produtos from './produto.model';
 import { useCarrinhoStore } from '../stores/carrinho';
+import { api } from '../boot/axios';
 
 export default {
   name: 'DetalhamentoProduto',
@@ -87,10 +87,10 @@ export default {
       this.$router.push('/');
     }
   },
-  mounted() {
-    const produto = produtos.find(p => p.id === +this.$route.params.id);
-    if (produto) {
-      this.produto = produto;
+  async mounted() {
+    const produto = await api.get(`/produto/${this.$route.params.id}`);
+    if (produto?.data) {
+      this.produto = produto.data;
     }
   },
 }

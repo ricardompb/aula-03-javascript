@@ -4,10 +4,10 @@
       <q-avatar color="primary" text-color="white">{{ contador }}</q-avatar>
     </div>
 
-    <template v-for="produto in produtos" :key="produto.id">
+    <template v-for="produto in produtos" :key="produto._id">
       <q-card class="my-card q-pa-sm">
-        <div style="cursor: pointer;" @click="$router.push(`/produto/${produto.id}`)">
-          <img :src="produto.foto">
+        <div style="cursor: pointer;" @click="$router.push(`/produto/${produto._id}`)">
+          <img :src="produto.foto" style="width: 230px; height: 256px;">
 
           <q-card-section>
             <div class="text-h6">{{ produto.nome }}</div>
@@ -30,8 +30,8 @@
 
 <script>
 import { defineComponent } from 'vue';
-import produtos from './produto.model';
 import { useCarrinhoStore } from '../stores/carrinho';
+import { api } from '../boot/axios';
 
 export default defineComponent({
   name: 'IndexPage',
@@ -41,7 +41,7 @@ export default defineComponent({
   },
   data () {
     return {
-      produtos,
+      produtos: [],
     }
   },
   computed: {
@@ -56,6 +56,10 @@ export default defineComponent({
     removeProdutoCarrinho (id) {
       this.carrinhoStore.removerProduto(id);
     }
+  },
+  async mounted () {
+    const resposta = await api.get('/produto');
+    this.produtos = resposta.data;
   }
 });
 </script>

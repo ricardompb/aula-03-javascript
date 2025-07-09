@@ -49,7 +49,18 @@
 import { defineComponent } from 'vue'
 import EssentialLink from 'components/EssentialLink.vue'
 
-const linksList = []
+const linksList = [
+  {
+    title: 'Home',
+    icon: 'home',
+    to: '/'
+  },
+  {
+    title: 'Produtos',
+    icon: 'shopping_cart',
+    to: '/produto/list'
+  }
+]
 
 export default defineComponent({
   name: 'MainLayout',

@@ -8,6 +8,15 @@ const routes = [
   },
 
   {
+    path: '/produto',
+    component: () => import('layouts/MainLayout.vue'),
+    children: [
+      { path: 'list', component: () => import('pages/produto/produto-list.vue') },
+      { path: 'form', component: () => import('pages/produto/produto-form.vue') },
+    ]
+  },
+
+  {
     path: '/produto/:id',
     component: () => import('layouts/MainLayout.vue'),
     children: [

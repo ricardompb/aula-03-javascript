@@ -1,0 +1,14 @@
+GET http://localhost:3000/produto
+###
+
+GET https://condax-api.krtec.app.br/api/v1/plano?page=1&pageSize=10
+
+###
+POST http://localhost:3000/produto
+content-type: application/json
+
+{
+    "nome": "NOVO PRODUTO",
+    "preco": 999999,
+    "descricao": "111"
+}

@@ -8,6 +8,14 @@ const routes = [
   },
 
   {
+    path: '/cabecalho',
+    component: () => import('layouts/MainLayout.vue'),
+    children: [
+      { path: '', component: () => import('components/Cabecalho.vue') }
+    ]
+  },
+
+  {
     path: '/produto',
     component: () => import('layouts/MainLayout.vue'),
     children: [
